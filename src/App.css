@@ -74,8 +74,8 @@ header {
 
 .geometric-pattern {
   position: absolute;
-  top: 0%;
-  left: 10%;
+  top: -10%;
+  left: -20%;
   transform: translate(-50%, -50%);
   width: 800px;
   height: 800px;
@@ -86,14 +86,14 @@ header {
 }
 
 .geometric-pattern-2 {
-  position: absolute;
-  top: 50%;
-  left: 50%;
+  position: relative;
+  top: 10%;
+  left: 10%;
   transform: translate(-50%, -50%);
   width: 600px;
   height: 600px;
   pointer-events: none;
-  z-index: 1;
+  z-index: -1;
   filter: blur(2px);
   opacity: 0.6;
 }
@@ -342,6 +342,70 @@ footer {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+}
+
+/* Custom Cursor Styles */
+.custom-cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: all 0.2s ease;
+  opacity: 0.8;
+  mix-blend-mode: difference;
+}
+
+.custom-cursor.hover {
+  width: 40px;
+  height: 40px;
+  border-color: #000000;
+  background-color: #ffffff;
+  opacity: 1;
+}
+
+button, .cta-button, .work-item, .contact-btn {
+  cursor: none;
+}
+
+/* Enhanced Work Items */
+.work-item {
+  position: relative;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.work-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.work-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s ease;
+}
+
+.work-item:hover::before {
+  left: 100%;
+}
+
+/* Responsive Elements */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2.5rem;
+  }
 }
 
 @media (max-width: 768px) {
