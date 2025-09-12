@@ -191,12 +191,10 @@
             repeat: -1
         });
 
-        // Removed mouse interaction - sphere rotates automatically only
 
         // Cursor coordinates
         document.addEventListener('mousemove', function(e) {
-            // Convert screen position to degrees (simplified mapping)
-            // Screen width = 360 degrees longitude, Screen height = 180 degrees latitude
+           
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
             

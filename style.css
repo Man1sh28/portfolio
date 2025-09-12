@@ -6,7 +6,7 @@
 
     body {
         font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        background: #020205;
+        background: #ffffff;
         overflow-x: hidden;
         margin: 0;
         padding: 0;
@@ -16,7 +16,7 @@
 
     .header{
         font-size: 7.1rem;
-        color: #f7f7f7;
+        color: #070707;
         font-family: 'Orbitron', monospace;
         position: relative;
         text-align: left;
@@ -85,7 +85,7 @@
     .sphere-container {
         position: absolute;
         top: 40%;
-        right: -10%;
+        right: -15%;
         transform: translate(-50%, -50%);
         width: 200px;
         height: 200px;
@@ -107,13 +107,13 @@
         left: 50%;
         width: 100px;
         height: 100px;
-        background: radial-gradient(circle at 30% 30%, #ffffff, #ffffff);
+        background: radial-gradient(circle at 30% 30%, #121212, #060606);
         border-radius: 50%;
         transform: translate(-50%, -50%);
         box-shadow: 
-            0 0 20px #ffffff,
-            0 0 40px #ffffff,
-            0 0 60px #ffffff;
+            0 0 20px #000000,
+            0 0 40px #090808,
+            0 0 60px #060606;
         animation: pulse 3s ease-in-out infinite;
     }
 
@@ -124,12 +124,13 @@
         border: 2px solid;
         border-radius: 50%;
         transform-style: preserve-3d;
+        color: #000000;
     }
 
     .ring-1 {
         width: 1020px;
         height: 1200px;
-        border-color: #ffffff;
+        border-color: #000000;
         transform: translate(-50%, -50%) rotateX(75deg);
         animation: rotate1 8s linear infinite;
     }
@@ -139,7 +140,7 @@
         height: 140px;
         border-color: #ffffff;
         transform: translate(-50%, -50%) rotateY(75deg);
-        animation: rotate2 12s linear infinite;
+        animation: rotate2 100s linear infinite;
     }
 
     .ring-3 {
