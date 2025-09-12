@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Man1sh</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="header">
+        <h1>MAN1SH</h1>
+        <div class="time-display" id="ist-time">Loading IST...</div>
+    </div>
+
+    <hr style="height:0.1px">
+
+    <div class="rel">
+        <h6>Get in touch</h6>
+        <a href="https://www.instagram.com/man1sh.08/">instagram</a>
+    </div>
+    <div class="circle">
+            
+    </div>
+
+    <div class="me">
+        <div class="sphere-container">
+            <div class="sphere">
+                <div class="ring ring-1"></div>
+                <div class="ring ring-2"></div>
+                <div class="ring ring-3"></div>
+                <div class="ring ring-4"></div>
+            </div>
+        </div>
+        <div class="para">
+            I'm a multidisciplinary designer who’s passionate
+            about crafting immersive websites and apps
+            currentlly in grade X
+        </div>
+    </div>
+    </div>
+
+    <div class="cursor-coords" id="cursor-coords">{0, 0}</div>
+
+    <script>
+        
+        gsap.registerPlugin();
+
+       
+        const isMobile = window.innerWidth <= 768;
+
+        // Initial page load animations
+        gsap.from('.header h1', { 
+            duration: isMobile ? 1.2 : 1.5, 
+            y: isMobile ? -50 : -100, 
+            opacity: 0, 
+            ease: 'power3.out',
+            delay: 0.2
+        });
+
+        gsap.from('.time-display', { 
+            duration: isMobile ? 0.8 : 1, 
+            x: isMobile ? 0 : 100, 
+            y: isMobile ? -30 : 0,
+            opacity: 0, 
+            ease: 'power2.out',
+            delay: isMobile ? 0.3 : 0.5
+        });
+
+        gsap.from('.rel', { 
+            duration: isMobile ? 0.8 : 1, 
+            y: isMobile ? 30 : 50, 
+            opacity: 0, 
+            ease: 'power2.out',
+            delay: isMobile ? 0.5 : 0.8
+        });
+
+        gsap.from('.para', { 
+            duration: isMobile ? 1 : 1.2, 
+            y: isMobile ? 20 : 30, 
+            opacity: 0, 
+            ease: 'power2.out',
+            delay: isMobile ? 0.8 : 1.2
+        });
+
+        
+        gsap.to('.cursor-coords', {
+            duration: 3,
+            y: '+=10',
+            repeat: -1,
+            yoyo: true,
+            ease: 'power1.inOut'
+        });
+
+        // Magnetic effect for .rel links
+        const relLinks = document.querySelectorAll('.rel a');
+        relLinks.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                gsap.to(link, {
+                    duration: 0.3,
+                    scale: 1.,
+                    color: '#000000',
+                    ease: 'power2.out'
+                });
+            });
+
+            link.addEventListener('mouseleave', () => {
+                gsap.to(link, {
+                    duration: 0.3,
+                    scale: 1,
+                    color: '',
+                    ease: 'power2.out'
+                });
+            });
+        });
+
+        // Enhanced decode text animation with GSAP
+        const paraElement = document.querySelector('.para');
+        const originalText = paraElement ? paraElement.textContent.trim() : '';
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%^&*';
+
+        function decodeText(element, finalText, duration = 2000) {
+            const textLength = finalText.length;
+            let currentIndex = 0;
+            
+            const interval = setInterval(() => {
+                let displayText = '';
+                for (let i = 0; i < textLength; i++) {
+                    if (i < currentIndex) {
+                        displayText += finalText[i];
+                    } else {
+                        displayText += chars[Math.floor(Math.random() * chars.length)];
+                    }
+                }
+                element.textContent = displayText;
+                
+                currentIndex++;
+                if (currentIndex > textLength) {
+                    clearInterval(interval);
+                    element.textContent = finalText;
+                    gsap.from(element, { duration: 0.5, opacity: 0.8, ease: 'power2.out' });
+                }
+            }, duration / textLength);
+        }
+
+        if (paraElement) {
+            paraElement.addEventListener('mouseenter', function() {
+                decodeText(this, originalText, 1500);
+                gsap.to(this, { duration: 0.3, scale: 1.02, ease: 'power2.out' });
+            });
+
+            paraElement.addEventListener('mouseleave', function() {
+                gsap.to(this, { duration: 0.3, scale: 1, ease: 'power2.out' });
+            });
+        }
+
+        function updateISTTime() {
+            const options = {
+                timeZone: 'Asia/Kolkata',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            };
+            const timeString = new Date().toLocaleTimeString('en-IN', options);
+            document.getElementById('ist-time').textContent = `IST ${timeString}`;
+        }
+        
+        updateISTTime();
+        setInterval(updateISTTime, 1000);
+
+        // Sphere and rings GSAP animations
+        gsap.from('.sphere-container', {
+            duration: 2,
+            scale: 0,
+            opacity: 0,
+            ease: 'elastic.out(1, 0.5)',
+            delay: 1.5
+        });
+
+        gsap.to('.sphere', {
+            duration: 25,
+            rotationY: 360,
+            rotationX: 180,
+            rotationZ: 90,
+            ease: 'none',
+            repeat: -1
+        });
+
+        // Removed mouse interaction - sphere rotates automatically only
+
+        // Cursor coordinates
+        document.addEventListener('mousemove', function(e) {
+            // Convert screen position to degrees (simplified mapping)
+            // Screen width = 360 degrees longitude, Screen height = 180 degrees latitude
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+            
+            // Calculate longitude (E/W) - 0 to 180 degrees from center
+            const longitude = ((e.clientX / screenWidth) * 360) - 180;
+            const lonDir = longitude >= 0 ? 'E' : 'W';
+            const lonValue = Math.abs(longitude).toFixed(2);
+            
+            // Calculate latitude (N/S) - 0 to 90 degrees from center  
+            const latitude = 90 - ((e.clientY / screenHeight) * 180);
+            const latDir = latitude >= 0 ? 'N' : 'S';
+            const latValue = Math.abs(latitude).toFixed(2);
+            
+            document.getElementById('cursor-coords').textContent = `${latValue}°${latDir} ${lonValue}°${lonDir}`;
+        });
+    </script>
+
+</body>
+
+</html>

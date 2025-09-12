@@ -1,0 +1,362 @@
+* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background: #020205;
+        overflow-x: hidden;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        width: 100vw;
+    }
+
+    .header{
+        font-size: 7.1rem;
+        color: #f7f7f7;
+        font-family: 'Orbitron', monospace;
+        position: relative;
+        text-align: left;
+        padding: 0.1rem 0;
+        padding-left: 59px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .header {
+            font-size: 3.5rem;
+            padding-left: 20px;
+            text-align: center;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .header {
+            font-size: 2.5rem;
+            padding-left: 15px;
+        }
+    }
+
+    .header h1 {
+        font-family: 'Orbitron', monospace;
+        font-weight: 50;
+        letter-spacing: -0.01em;
+    }
+
+    .para{
+        font-size: 2rem;
+        color: #b7b3a6;
+    }
+
+    .header hr{
+        height: 0.1px;
+        width: 60%;
+        background-color: #ffffff;
+        opacity: 0.7;
+    }
+
+    .time-display {
+        font-family: 'Orbitron', monospace;
+        font-size: 1rem;
+        color: #b7b3a6;
+        position: absolute;
+        top: 41px;
+        right: 450px;
+        opacity: 0.7;
+    }
+
+    .cursor-coords {
+        font-family: 'Orbitron', monospace;
+        font-size: 0.9rem;
+        color: #ffffff;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000;
+    
+        padding: 10px 15px;
+    
+        letter-spacing: 0.1em;
+    }
+
+    /* 3D Sphere with Rings */
+    .sphere-container {
+        position: absolute;
+        top: 40%;
+        right: -10%;
+        transform: translate(-50%, -50%);
+        width: 200px;
+        height: 200px;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    .sphere {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+    }
+
+    .sphere::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100px;
+        height: 100px;
+        background: radial-gradient(circle at 30% 30%, #ffffff, #ffffff);
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 
+            0 0 20px #ffffff,
+            0 0 40px #ffffff,
+            0 0 60px #ffffff;
+        animation: pulse 3s ease-in-out infinite;
+    }
+
+    .ring {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border: 2px solid;
+        border-radius: 50%;
+        transform-style: preserve-3d;
+    }
+
+    .ring-1 {
+        width: 1020px;
+        height: 1200px;
+        border-color: #ffffff;
+        transform: translate(-50%, -50%) rotateX(75deg);
+        animation: rotate1 8s linear infinite;
+    }
+
+    .ring-2 {
+        width: 140px;
+        height: 140px;
+        border-color: #ffffff;
+        transform: translate(-50%, -50%) rotateY(75deg);
+        animation: rotate2 12s linear infinite;
+    }
+
+    .ring-3 {
+        width: 160px;
+        height: 160px;
+        border-color: #ffffff;
+        transform: translate(-50%, -50%) rotateZ(75deg);
+        animation: rotate3 10s linear infinite;
+    }
+
+    .ring-4 {
+        width: 180px;
+        height: 180px;
+        border-color: #ffffff;
+        transform: translate(-50%, -50%) rotateX(45deg) rotateY(45deg);
+        animation: rotate4 15s linear infinite;
+    }
+
+    @keyframes rotate1 {
+        from { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(0deg); }
+        to { transform: translate(-50%, -50%) rotateX(75deg) rotateZ(360deg); }
+    }
+
+    @keyframes rotate2 {
+        from { transform: translate(-50%, -50%) rotateY(75deg) rotateX(0deg); }
+        to { transform: translate(-50%, -50%) rotateY(75deg) rotateX(360deg); }
+    }
+
+    @keyframes rotate3 {
+        from { transform: translate(-50%, -50%) rotateZ(75deg) rotateY(0deg); }
+        to { transform: translate(-50%, -50%) rotateZ(75deg) rotateY(360deg); }
+    }
+
+    @keyframes rotate4 {
+        from { transform: translate(-50%, -50%) rotateX(45deg) rotateY(45deg) rotateZ(0deg); }
+        to { transform: translate(-50%, -50%) rotateX(45deg) rotateY(45deg) rotateZ(360deg); }
+    }
+
+    @keyframes pulse {
+        0%, 100% { 
+            box-shadow: 
+                0 0 20px #ffffff,
+                0 0 40px #ffffff,
+                0 0 60px #ffffff;
+        }
+        50% { 
+            box-shadow: 
+                0 0 30px #ffffff,
+                0 0 60px #ffffff,
+                0 0 90px #ffffff;
+        }
+    }
+
+    /* Responsive sphere */
+    @media screen and (max-width: 768px) {
+        .sphere-container {
+            width: 150px;
+            height: 150px;
+        }
+        
+        .sphere::before {
+            width: 75px;
+            height: 75px;
+        }
+        
+        .ring-1 { width: 90px; height: 90px; }
+        .ring-2 { width: 105px; height: 105px; }
+        .ring-3 { width: 120px; height: 120px; }
+        .ring-4 { width: 135px; height: 135px; }
+    }
+
+    @media screen and (max-width: 480px) {
+        .sphere-container {
+            width: 120px;
+            height: 120px;
+        }
+        
+        .sphere::before {
+            width: 60px;
+            height: 60px;
+        }
+        
+        .ring-1 { width: 72px; height: 72px; }
+        .ring-2 { width: 84px; height: 84px; }
+        .ring-3 { width: 96px; height: 96px; }
+        .ring-4 { width: 108px; height: 108px; }
+    }
+
+    @media screen and (max-width: 768px) {
+        .time-display {
+            position: relative;
+            top: auto;
+            right: auto;
+            text-align: center;
+            margin: 10px 0;
+        }
+        
+        .cursor-coords {
+            bottom: 5px;
+            right: 5px;
+            font-size: 0.8rem;
+            padding: 6px 10px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .cursor-coords {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            max-width: calc(100vw - 20px);
+            word-wrap: break-word;
+        }
+    }
+
+    hr {
+        border: none;
+        background-color: #b7b3a6;
+        height: 1px;
+        margin: 0 auto;
+        opacity: 0.5;
+}
+
+    .para{
+        font-size: 1.7rem;
+        color: #7e7b81;
+        white-space: pre-line;
+        position: absolute;
+        bottom: 100px;
+        left: 59px;
+    }
+
+    .rel{
+        position: relative;
+    }
+
+    .rel h6{
+        font-size: 1rem;
+        font-family: 'Alumni Sans Pinstripe', monospace;
+        color: #737375;
+        white-space: pre-line;
+        position: absolute;
+        bottom: -25px;
+        left: 64px;
+    }
+
+    .rel a{
+        font-size: 0.7rem;
+        font-family: 'Alumni Sans Pinstripe', monospace;
+        color: #f6eeff;
+        white-space: pre-line;
+        position: absolute;
+        bottom: -50px;
+        left: 59px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        padding: 4px 8px;
+        width: 100%;
+        border-radius: 0px;
+    }
+
+    .rel a:hover {
+        background-color: #ffffff;
+        color: #000000;
+    }
+
+    @media screen and (max-width: 768px) {
+        .para {
+            position: relative;
+            bottom: auto;
+            left: auto;
+            text-align: center;
+            margin: 40px 20px;
+            font-size: 1.4rem;
+        }
+        
+        .rel {
+            position: relative;
+            left: auto;
+            bottom: auto;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .rel h6 {
+            position: relative;
+            left: auto;
+            bottom: auto;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .rel a {
+            position: relative;
+            left: auto;
+            bottom: auto;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin: 5px;
+        }
+    }
+
+    @media screen and (max-width: 480px) {
+        .para {
+            font-size: 1.2rem;
+            margin: 30px 15px;
+        }
+        
+        .rel {
+            margin: 20px 0;
+        }
+        
+        .rel h6 {
+            font-size: 0.8rem;
+        }
+        
+        .rel a {
+            font-size: 0.8rem;
+            padding: 6px 10px;
+        }
+    }
