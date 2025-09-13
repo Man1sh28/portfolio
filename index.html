@@ -8,41 +8,84 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 
 <body>
 
-    <div class="header">
-        <h1>MAN1SH</h1>
-        <div class="time-display" id="ist-time">Loading IST...</div>
-    </div>
-
-    <hr style="height:0.1px">
-
-    <div class="rel">
-        <h6>Get in touch</h6>
-        <a href="https://www.instagram.com/man1sh.08/">instagram</a>
-    </div>
-    <div class="circle">
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="header">
+            <h1>MAN<span class="highlight-1">1</span>SH</h1>
+             <hr>
+            <div class="time-display" id="ist-time">Loading IST...</div>
             
-    </div>
+        </div>
 
-    <div class="me">
-        <div class="sphere-container">
-            <div class="sphere">
-                <div class="ring ring-1"></div>
-                <div class="ring ring-2"></div>
-                <div class="ring ring-3"></div>
-                <div class="ring ring-4"></div>
+       
+
+        <div class="rel">
+            <h6>Get in touch</h6>
+            <a href="https://www.instagram.com/man1sh.08/">instagram</a>
+        </div>
+        <div class="circle">
+                
+        </div>
+
+        <div class="me">
+            <div class="sphere-container">
+                <div class="sphere">
+                    <div class="ring ring-1"></div>
+                    <div class="ring ring-2"></div>
+                    <div class="ring ring-3"></div>
+                    <div class="ring ring-4"></div>
+                </div>
+            </div>
+            <div class="para">
+                I'm a multidisciplinary designer who's passionate
+                about crafting immersive websites and apps
+                currentlly in grade X
             </div>
         </div>
-        <div class="para">
-            I'm a multidisciplinary designer who’s passionate
-            about crafting immersive websites and apps
-            currentlly in grade X
+    </div>
+
+    <!-- Work Section -->
+    <section class="work-section">
+        <div class="work-header">
+            <h2 class="work-title reveal-text">SELECTED WORK</h2>
+            <div class="work-subtitle reveal-text">Projects that define excellence</div>
         </div>
-    </div>
-    </div>
+        
+        <div class="flowing-menu" id="flowing-menu">
+            <div class="menu-item" data-link="#" data-image="https://picsum.photos/600/400?random=1">
+                <span class="menu-text">Digital Portfolio</span>
+                <div class="menu-image">
+                    <img src="https://picsum.photos/600/400?random=1" alt="Digital Portfolio">
+                </div>
+            </div>
+            
+            <div class="menu-item" data-link="#" data-image="https://picsum.photos/600/400?random=2">
+                <span class="menu-text">Brand Identity</span>
+                <div class="menu-image">
+                    <img src="https://picsum.photos/600/400?random=2" alt="Brand Identity">
+                </div>
+            </div>
+            
+            <div class="menu-item" data-link="#" data-image="https://picsum.photos/600/400?random=3">
+                <span class="menu-text">Mobile App</span>
+                <div class="menu-image">
+                    <img src="https://picsum.photos/600/400?random=3" alt="Mobile App">
+                </div>
+            </div>
+            
+            <div class="menu-item" data-link="#" data-image="https://picsum.photos/600/400?random=4">
+                <span class="menu-text">Web Platform</span>
+                <div class="menu-image">
+                    <img src="https://picsum.photos/600/400?random=4" alt="Web Platform">
+                </div>
+            </div>
+        </div>
+    </section>
 
     <div class="cursor-coords" id="cursor-coords">{0, 0}</div>
 
@@ -191,6 +234,93 @@
             repeat: -1
         });
 
+
+        // ScrollTrigger for work section animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Scroll reveal animations for work section
+        gsap.utils.toArray('.reveal-text').forEach((element, index) => {
+            gsap.fromTo(element, {
+                y: 100,
+                opacity: 0
+            }, {
+                y: 0,
+                opacity: 1,
+                duration: 1.2,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse'
+                },
+                delay: index * 0.2
+            });
+        });
+        
+        // Flowing menu animations
+        gsap.utils.toArray('.menu-item').forEach((item, index) => {
+            // Initial animation on scroll
+            gsap.fromTo(item, {
+                opacity: 0,
+                scale: 0.8,
+                rotation: 10
+            }, {
+                opacity: 1,
+                scale: 1,
+                rotation: 0,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 85%',
+                    end: 'bottom 15%',
+                    toggleActions: 'play none none reverse'
+                },
+                delay: index * 0.15
+            });
+            
+            // Hover effects
+            item.addEventListener('mouseenter', () => {
+                gsap.to(item, {
+                    scale: 1.05,
+                    z: 10,
+                    duration: 0.4,
+                    ease: 'power2.out'
+                });
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                gsap.to(item, {
+                    scale: 1,
+                    z: 0,
+                    duration: 0.4,
+                    ease: 'power2.out'
+                });
+            });
+            
+            // Click handler
+            item.addEventListener('click', () => {
+                const link = item.dataset.link;
+                if (link && link !== '#') {
+                    window.open(link, '_blank');
+                }
+            });
+        });
+        
+        // Text decode animation for menu items on scroll
+        const menuTexts = document.querySelectorAll('.menu-text');
+        menuTexts.forEach((text) => {
+            const originalText = text.textContent;
+            
+            ScrollTrigger.create({
+                trigger: text,
+                start: 'top 70%',
+                onEnter: () => {
+                    decodeText(text, originalText, 800);
+                }
+            });
+        });
 
         // Cursor coordinates
         document.addEventListener('mousemove', function(e) {
