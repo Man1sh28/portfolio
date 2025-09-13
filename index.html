@@ -51,38 +51,27 @@
 
     <!-- Work Section -->
     <section class="work-section">
+        <div class="work-bg-pattern"></div>
         <div class="work-header">
             <h2 class="work-title reveal-text">SELECTED WORK</h2>
             <div class="work-subtitle reveal-text">Projects that define excellence</div>
         </div>
         
         <div class="flowing-menu" id="flowing-menu">
-            <div class="menu-item" data-link="#" data-image="https://picsum.photos/600/400?random=1">
+            <div class="menu-item" data-link="#">
                 <span class="menu-text">Digital Portfolio</span>
-                <div class="menu-image">
-                    <img src="https://picsum.photos/600/400?random=1" alt="Digital Portfolio">
-                </div>
             </div>
             
-            <div class="menu-item" data-link="#" data-image="https://picsum.photos/600/400?random=2">
-                <span class="menu-text">Brand Identity</span>
-                <div class="menu-image">
-                    <img src="https://picsum.photos/600/400?random=2" alt="Brand Identity">
-                </div>
+            <div class="menu-item" data-link="#">
+                <span class="menu-text">GRAPHIC DESIGNS</span>
             </div>
             
-            <div class="menu-item" data-link="#" data-image="https://picsum.photos/600/400?random=3">
+            <div class="menu-item" data-link="#">
                 <span class="menu-text">Mobile App</span>
-                <div class="menu-image">
-                    <img src="https://picsum.photos/600/400?random=3" alt="Mobile App">
-                </div>
             </div>
             
-            <div class="menu-item" data-link="#" data-image="https://picsum.photos/600/400?random=4">
-                <span class="menu-text">Web Platform</span>
-                <div class="menu-image">
-                    <img src="https://picsum.photos/600/400?random=4" alt="Web Platform">
-                </div>
+            <div class="menu-item" data-link="#">
+                <span class="menu-text">EVENZA</span>
             </div>
         </div>
     </section>
@@ -263,13 +252,13 @@
             // Initial animation on scroll
             gsap.fromTo(item, {
                 opacity: 0,
-                scale: 0.8,
-                rotation: 10
+                y: 50,
+                rotationX: 45
             }, {
                 opacity: 1,
-                scale: 1,
-                rotation: 0,
-                duration: 1,
+                y: 0,
+                rotationX: 0,
+                duration: 1.2,
                 ease: 'power3.out',
                 scrollTrigger: {
                     trigger: item,
@@ -280,27 +269,58 @@
                 delay: index * 0.15
             });
             
-            // Hover effects
+            // Enhanced hover effects
             item.addEventListener('mouseenter', () => {
                 gsap.to(item, {
-                    scale: 1.05,
-                    z: 10,
-                    duration: 0.4,
+                    y: -5,
+                    duration: 0.6,
                     ease: 'power2.out'
                 });
+                
+                // Ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.cssText = `
+                    position: absolute;
+                    border-radius: 50%;
+                    background: rgba(255, 255, 255, 0.1);
+                    transform: scale(0);
+                    animation: ripple 0.8s ease-out;
+                    pointer-events: none;
+                    top: 50%;
+                    left: 50%;
+                    width: 20px;
+                    height: 20px;
+                    margin: -10px 0 0 -10px;
+                `;
+                
+                item.appendChild(ripple);
+                
+                setTimeout(() => {
+                    if (ripple.parentNode) {
+                        ripple.parentNode.removeChild(ripple);
+                    }
+                }, 800);
             });
             
             item.addEventListener('mouseleave', () => {
                 gsap.to(item, {
-                    scale: 1,
-                    z: 0,
-                    duration: 0.4,
+                    y: 0,
+                    duration: 0.6,
                     ease: 'power2.out'
                 });
             });
             
-            // Click handler
+            // Click handler with enhanced feedback
             item.addEventListener('click', () => {
+                // Create click wave effect
+                gsap.to(item, {
+                    scale: 0.98,
+                    duration: 0.1,
+                    ease: 'power2.out',
+                    yoyo: true,
+                    repeat: 1
+                });
+                
                 const link = item.dataset.link;
                 if (link && link !== '#') {
                     window.open(link, '_blank');
