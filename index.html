@@ -15,6 +15,10 @@
 
     <!-- Hero Section -->
     <div class="hero-section">
+        <video autoplay loop muted playsinline>
+            <source src="1.mp4" type="video/mp4">
+        </video>
+        
         <div class="header">
             <h1>MAN<span class="highlight-1">1</span>SH</h1>
              <hr>
@@ -72,6 +76,49 @@
             
             <div class="menu-item" data-link="#">
                 <span class="menu-text">EVENZA</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cinematic Transition Circle -->
+    <div class="cinematic-transition">
+        <svg class="cinematic-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle class="cinematic-circle" cx="100" cy="0" r="0" fill="#ffffff"/>
+        </svg>
+    </div>
+
+    <!-- Graphic Designs Section -->
+    <section class="graphics-section">
+        <div class="graphics-content">
+            <div class="graphics-header">
+                <h2 class="graphics-title">GRAPHIC DESIGNS</h2>
+                <div class="graphics-subtitle">Visual storytelling through design</div>
+            </div>
+            
+            <div class="graphics-grid">
+                <div class="graphic-item">
+                    <div class="graphic-number">01</div>
+                    <h3 class="graphic-name">Brand Identities</h3>
+                    <p class="graphic-description">Comprehensive visual identity systems that capture brand essence</p>
+                </div>
+                
+                <div class="graphic-item">
+                    <div class="graphic-number">02</div>
+                    <h3 class="graphic-name">Print Designs</h3>
+                    <p class="graphic-description">Posters, brochures, and marketing materials with impact</p>
+                </div>
+                
+                <div class="graphic-item">
+                    <div class="graphic-number">03</div>
+                    <h3 class="graphic-name">Digital Graphics</h3>
+                    <p class="graphic-description">Social media graphics and digital advertising assets</p>
+                </div>
+                
+                <div class="graphic-item">
+                    <div class="graphic-number">04</div>
+                    <h3 class="graphic-name">Illustrations</h3>
+                    <p class="graphic-description">Custom illustrations and iconography for various projects</p>
+                </div>
             </div>
         </div>
     </section>
@@ -339,6 +386,89 @@
                 onEnter: () => {
                     decodeText(text, originalText, 800);
                 }
+            });
+        });
+
+        // Cinematic Circle Transition Animation
+        const cinematicCircle = document.querySelector('.cinematic-circle');
+        const graphicsSection = document.querySelector('.graphics-section');
+        const graphicsContent = document.querySelector('.graphics-content');
+        
+        // Calculate maximum radius needed to cover screen from top-right corner
+        const maxRadius = Math.sqrt(Math.pow(window.innerWidth, 2) + Math.pow(window.innerHeight, 2));
+        
+        // Create frame-by-frame scroll-controlled animation
+        gsap.fromTo(cinematicCircle, 
+            {
+                attr: { r: 0 }
+            },
+            {
+                attr: { r: maxRadius },
+                ease: 'none', // Linear progression tied to scroll
+                scrollTrigger: {
+                    trigger: graphicsSection,
+                    start: 'top 100%',
+                    end: 'top 20%',
+                    scrub: 0.1, // More responsive - faster frame updates
+                    invalidateOnRefresh: true
+                }
+            }
+        );
+        
+        // Reveal graphics content only AFTER circle covers most of the screen
+        ScrollTrigger.create({
+            trigger: graphicsSection,
+            start: 'top 30%', // Wait until circle is nearly full size
+            onEnter: () => {
+                gsap.to(graphicsContent, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 1.5,
+                    ease: 'power2.out',
+                    delay: 0.3
+                });
+            }
+        });
+
+        
+        // Animate graphics items on scroll
+        gsap.utils.toArray('.graphic-item').forEach((item, index) => {
+            gsap.fromTo(item, {
+                opacity: 0,
+                y: 60,
+                scale: 0.9
+            }, {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 1,
+                ease: 'power3.out',
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse'
+                },
+                delay: index * 0.2
+            });
+        });
+        
+        // Enhanced hover effects for graphic items
+        gsap.utils.toArray('.graphic-item').forEach((item) => {
+            item.addEventListener('mouseenter', () => {
+                gsap.to(item, {
+                    scale: 1.02,
+                    duration: 0.4,
+                    ease: 'power2.out'
+                });
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                gsap.to(item, {
+                    scale: 1,
+                    duration: 0.4,
+                    ease: 'power2.out'
+                });
             });
         });
 
