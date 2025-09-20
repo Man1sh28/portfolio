@@ -22,7 +22,7 @@ body {
     overflow: hidden;
 }
 
-/* Retro TV Screen Overlay Effect */
+
 .tv-overlay {
     position: absolute;
     top: 0;
@@ -32,7 +32,7 @@ body {
     pointer-events: none;
     z-index: 1000;
     background: 
-        /* Scanlines */
+       
         repeating-linear-gradient(
             0deg,
             transparent,
@@ -74,6 +74,9 @@ body {
     object-fit: cover;
     opacity: 0.02;
     filter: sepia(0.2) contrast(1.1) brightness(0.8);
+    filter: drop-shadow(0 0 0.5rem rgba(255, 255, 255, 0.05));
+    filter: contrast(3.5)
+    opacity(0.05)
 }
 
 .tv-overlay::before {
@@ -917,3 +920,95 @@ hr {
     line-height: 0.8;
 }
 
+
+.graphics-title-outline {
+    color: transparent;
+    -webkit-text-stroke: 3px #091d9f;
+    text-stroke: 3px #091d9f;
+    text-shadow: none;
+}
+
+.c1{
+    background-color: #8374e7;
+    height: 700px;
+    width: 400px;
+    border-radius: 50%;
+    margin: 20px auto;
+    box-shadow: 0 10px 30px rgba(9, 29, 159, 0.3);
+    transition: all 0.5s ease;
+    position: fixed;
+    top: -10%;
+    left: -5%;
+    transform: translate(-50%, -50%);
+    z-index: -3;
+    filter: blur(90px);
+    animation: float1 8s ease-in-out infinite, pulse1 6s ease-in-out infinite, colorShift1 12s ease-in-out infinite;
+}
+
+.c2{
+    background-color: #5b6690;
+    height: 700px;
+    width: 400px;
+    border-radius: 50%;
+    margin: 20px auto;
+    box-shadow: 0 10px 30px rgba(9, 29, 159, 0.3);
+    transition: all 0.5s ease;
+    position: fixed;
+    top: -10%;
+    left: -5%;
+    transform: translate(-50%, -50%);
+    z-index: -3;
+    filter: blur(90px);
+    animation: float2 10s ease-in-out infinite, pulse2 8s ease-in-out infinite, colorShift2 15s ease-in-out infinite;
+}
+
+/* Floating animations */
+@keyframes float1 {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0px) translateX(0px);
+    }
+    25% {
+        transform: translate(-50%, -50%) translateY(-30px) translateX(20px);
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-50px) translateX(-15px);
+    }
+    75% {
+        transform: translate(-50%, -50%) translateY(-20px) translateX(30px);
+    }
+}
+
+@keyframes float2 {
+    0%, 100% {
+        transform: translate(-50%, -50%) translateY(0px) translateX(0px);
+    }
+    33% {
+        transform: translate(-50%, -50%) translateY(40px) translateX(-25px);
+    }
+    66% {
+        transform: translate(-50%, -50%) translateY(-30px) translateX(35px);
+    }
+}
+
+/* Pulsing animations */
+@keyframes pulse1 {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.9;
+    }
+}
+
+@keyframes pulse2 {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.15);
+        opacity: 0.8;
+    }
+}
