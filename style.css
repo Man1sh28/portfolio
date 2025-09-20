@@ -21,6 +21,149 @@ body {
     flex-direction: column;
     overflow: hidden;
 }
+
+/* Retro TV Screen Overlay Effect */
+.tv-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1000;
+    background: 
+        /* Scanlines */
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 255, 0, 0.03) 2px,
+            rgba(0, 255, 0, 0.03) 4px
+        ),
+        /* RGB Pixel Grid */
+        repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 1px,
+            rgba(255, 0, 0, 0.02) 1px,
+            rgba(255, 0, 0, 0.02) 2px
+        ),
+        /* Vignette Effect */
+        radial-gradient(
+            ellipse at center,
+            transparent 50%,
+            rgba(0, 0, 0, 0.15) 100%
+        );
+    animation: tvScanlines 0.1s linear infinite;
+}
+
+/* TV Screen Background */
+.tv-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    overflow: hidden;
+}
+
+.tv-screen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.02;
+    filter: sepia(0.2) contrast(1.1) brightness(0.8);
+}
+
+.tv-overlay::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(
+            135deg,
+            rgba(0, 255, 100, 0.02) 0%,
+            transparent 50%,
+            rgba(255, 0, 100, 0.02) 100%
+        );
+    animation: tvFlicker 3s ease-in-out infinite alternate;
+}
+
+.tv-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.05);
+    animation: tvStatic 0.2s ease-in-out infinite;
+}
+
+@keyframes tvScanlines {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(4px);
+    }
+}
+
+@keyframes tvFlicker {
+    0% {
+        opacity: 0.8;
+    }
+    25% {
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 0.85;
+    }
+    75% {
+        opacity: 0.95;
+    }
+    100% {
+        opacity: 0.88;
+    }
+}
+
+@keyframes tvStatic {
+    0% {
+        opacity: 0.05;
+    }
+    5% {
+        opacity: 0.08;
+    }
+    10% {
+        opacity: 0.03;
+    }
+    15% {
+        opacity: 0.07;
+    }
+    20% {
+        opacity: 0.05;
+    }
+    25% {
+        opacity: 0.06;
+    }
+    30% {
+        opacity: 0.04;
+    }
+    100% {
+        opacity: 0.05;
+    }
+}
+
+/* Disable TV effect on mobile for performance */
+@media screen and (max-width: 768px) {
+    .tv-overlay {
+        display: none;
+    }
+}
     
 .hero-section video {
     position: absolute;
@@ -735,327 +878,22 @@ hr {
 }
 
 .graphics-header {
-    margin-bottom: 80px;
-    text-align: left;
+    margin-bottom: 10px;
+    text-align: right;
+    white-space: pre;
+
 }
 
 .graphics-title {
     font-family: 'Orbitron', monospace;
-    font-size: 4.5rem;
-    font-weight: 700;
-    color: #000000;
-    margin-bottom: 20px;
-    letter-spacing: -0.02em;
+    font-size: 20rem;
+    font-weight: 7000;
+    color: #091d9f;
+    margin-bottom: -40px;
+    letter-spacing: -0.05em;
     position: relative;
+    white-space: pre;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+    line-height: 0.8;
 }
-
-.graphics-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: linear-gradient(90deg, #000000, transparent);
-    animation: underlineExpandDark 3s ease-out 1s forwards;
-}
-
-@keyframes underlineExpandDark {
-    to {
-        width: 30%;
-    }
-}
-
-.graphics-subtitle {
-    font-family: 'Inter', sans-serif;
-    font-size: 1.2rem;
-    color: #000000;
-    opacity: 0.7;
-    position: relative;
-    padding-left: 20px;
-}
-
-.graphics-subtitle::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 20px;
-    background: #000000;
-    opacity: 0.6;
-}
-
-.graphics-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
-    margin-top: 60px;
-}
-
-.graphic-item {
-    background: rgba(0, 0, 0, 0.02);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    padding: 30px;
-    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.graphic-image {
-    width: 100%;
-    height: 200px;
-    border-radius: 8px;
-    overflow: hidden;
-    margin-bottom: 15px;
-    position: relative;
-    background: rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    transition: all 0.4s ease;
-}
-
-.graphic-image::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-    transform: translateX(-100%);
-    transition: transform 0.8s ease;
-    z-index: 2;
-}
-
-.graphic-item:hover .graphic-image::before {
-    transform: translateX(100%);
-}
-
-.placeholder-svg {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-}
-
-.graphic-item:hover .placeholder-svg {
-    transform: scale(1.05);
-}
-
-.graphic-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.05), transparent);
-    transition: left 0.8s ease;
-}
-
-.graphic-item:hover::before {
-    left: 100%;
-}
-
-.graphic-item:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    border-color: rgba(0, 0, 0, 0.2);
-}
-
-.graphic-number {
-    font-family: 'Orbitron', monospace;
-    font-size: 2rem;
-    font-weight: 700;
-    color: #000000;
-    opacity: 0.3;
-    margin-bottom: 20px;
-    transition: all 0.3s ease;
-}
-
-.graphic-item:hover .graphic-number {
-    opacity: 0.8;
-    transform: scale(1.1);
-}
-
-.graphic-name {
-    font-family: 'Orbitron', monospace;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: #000000;
-    margin-bottom: 12px;
-    transition: color 0.3s ease;
-}
-
-.graphic-description {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
-    color: #000000;
-    line-height: 1.6;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-}
-
-.graphic-item:hover .graphic-description {
-    opacity: 1;
-}
-
-
-
-/* Responsive Work Section */
-@media screen and (max-width: 768px) {
-    .work-section {
-        padding: 80px 20px;
-    }
-
-    .work-title {
-        font-size: 2.8rem;
-        text-align: center;
-    }
-
-    .work-subtitle {
-        font-size: 1rem;
-        text-align: center;
-    }
-
-    .work-header {
-        margin-bottom: 50px;
-    }
-
-    .flowing-menu {
-        padding: 0;
-    }
-
-    .menu-item {
-        height: 100px;
-    }
-
-    .menu-text {
-        font-size: 2rem;
-    }
-
-    .graphics-section {
-        padding: 80px 20px;
-    }
-
-    .graphics-title {
-        font-size: 2.8rem;
-        text-align: center;
-    }
-
-    .graphics-subtitle {
-        font-size: 1rem;
-        text-align: center;
-        padding-left: 0;
-    }
-
-    .graphics-subtitle::before {
-        display: none;
-    }
-
-    .graphics-grid {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-
-    .graphic-item {
-        padding: 25px;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .para {
-        font-size: 1.2rem;
-        margin: 30px 15px;
-    }
-
-    .rel {
-        margin: 20px 0;
-    }
-
-    .rel h6 {
-        font-size: 0.8rem;
-    }
-
-    .rel a {
-        font-size: 0.8rem;
-        padding: 6px 10px;
-    }
-
-    .work-section {
-        padding: 60px 15px;
-    }
-
-    .work-title {
-        font-size: 2.2rem;
-    }
-
-    .work-subtitle {
-        font-size: 0.9rem;
-    }
-
-    .flowing-menu {
-        padding: 0;
-    }
-
-    .menu-item {
-        height: 80px;
-    }
-
-    .menu-text {
-        font-size: 1.5rem;
-    }
-
-    .graphics-section {
-        padding: 60px 15px;
-    }
-
-    .graphics-title {
-        font-size: 2.2rem;
-    }
-
-    .graphics-subtitle {
-        font-size: 0.9rem;
-    }
-
-    .graphic-item {
-        padding: 20px;
-    }
-
-    .graphic-number {
-        font-size: 1.5rem;
-    }
-
-    .graphic-name {
-        font-size: 1.2rem;
-    }
-
-    .graphic-description {
-        font-size: 0.9rem;
-    }
-}
-
-
-
-
-.hero-section video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    min-width: 100%;
-    min-height: 100%;
-    width: 100%;
-    height: 100%;
-    transform: translateX(-50%) translateY(-50%);
-    z-index: -1;
-    object-fit: cover;
-    z-index: -1000;
-}
-
 
