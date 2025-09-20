@@ -97,9 +97,9 @@
     <!-- Graphic Designs Section -->
     <section class="graphics-section">
         <div class="graphics-content">
-            <div class="graphics-header">
-                <h2 class="graphics-title">GRAPHIC</h2>
-                <h2 class="graphics-title"> DESIGNS</h2>
+            <div class="graphics-header" id="graphics-header">
+                <h2 class="graphics-title reveal-text">GRAPHIC</h2>
+                <h2 class="graphics-title reveal-text"> DESIGNS</h2>
               
                     
                 </div>
@@ -236,7 +236,7 @@
         updateISTTime();
         setInterval(updateISTTime, 1000);
 
-        // Sphere and rings GSAP animations
+        
         gsap.from('.sphere-container', {
             duration: 2,
             scale: 0,
@@ -496,6 +496,136 @@
             const latValue = Math.abs(latitude).toFixed(2);
             
             document.getElementById('cursor-coords').textContent = `${latValue}°${latDir} ${lonValue}°${lonDir}`;
+        });
+
+        // Image Trail Effect for Graphics Header
+        class ImageTrail {
+            constructor() {
+                this.graphicsHeader = document.getElementById('graphics-header');
+                this.trails = [];
+                this.maxTrails = 1;
+                this.trailDelay = 950; 
+                this.lastTrailTime = 0;
+                this.isActive = false;
+                
+                this.init();
+            }
+            
+            init() {
+                if (!this.graphicsHeader) return;
+                
+                this.graphicsHeader.addEventListener('mouseenter', this.activate.bind(this));
+                this.graphicsHeader.addEventListener('mouseleave', this.deactivate.bind(this));
+                this.graphicsHeader.addEventListener('mousemove', this.onMouseMove.bind(this));
+            }
+            
+            activate() {
+                this.isActive = true;
+            }
+            
+            deactivate() {
+                this.isActive = false;
+                this.clearTrails();
+            }
+            
+            onMouseMove(e) {
+                if (!this.isActive) return;
+                
+                const currentTime = Date.now();
+                if (currentTime - this.lastTrailTime < this.trailDelay) return;
+                
+                this.createTrail(e.clientX, e.clientY);
+                this.lastTrailTime = currentTime;
+            }
+            
+            createTrail(x, y) {
+                const trail = document.createElement('div');
+                trail.className = 'image-trail';
+                
+               
+                const images = ['discord.png', 'imdone.png', '2.png'];
+                const randomImage = images[Math.floor(Math.random() * images.length)];
+                
+                trail.innerHTML = `<img src="${randomImage}" alt="trail">`;
+                
+                trail.style.left = x + 'px';
+                trail.style.top = y + 'px';
+                
+                document.body.appendChild(trail);
+                this.trails.push(trail);
+                
+                // Animate trail appearance (no rotation)
+                gsap.set(trail, {
+                    opacity: 0,
+                    scale: 0.3
+                });
+                
+                gsap.to(trail, {
+                    opacity: 0.8,
+                    scale: 1,
+                    duration: 0.3,
+                    ease: 'power2.out'
+                });
+                
+                // Animate trail disappearance after 2.5 seconds (no rotation)
+                gsap.to(trail, {
+                    opacity: 0,
+                    scale: 0.2,
+                    duration: 1.5,
+                    delay: 2.5,
+                    ease: 'power2.in',
+                    onComplete: () => {
+                        this.removeTrail(trail);
+                    }
+                });
+                
+                // Add floating movement
+                gsap.to(trail, {
+                    x: (Math.random() - 0.5) * 100,
+                    y: (Math.random() - 0.5) * 50,
+                    duration: 4.0,
+                    ease: 'power1.inOut'
+                });
+                
+                
+                if (this.trails.length > this.maxTrails) {
+                    const oldTrail = this.trails.shift();
+                    this.removeTrail(oldTrail);
+                }
+            }
+            
+            removeTrail(trail) {
+                if (trail && trail.parentNode) {
+                    trail.parentNode.removeChild(trail);
+                }
+                const index = this.trails.indexOf(trail);
+                if (index > -1) {
+                    this.trails.splice(index, 1);
+                }
+            }
+            
+            clearTrails() {
+                this.trails.forEach(trail => {
+                    if (trail && trail.parentNode) {
+                        gsap.to(trail, {
+                            opacity: 0,
+                            scale: 0,
+                            duration: 0.9,
+                            onComplete: () => {
+                                if (trail.parentNode) {
+                                    trail.parentNode.removeChild(trail);
+                                }
+                            }
+                        });
+                    }
+                });
+                this.trails = [];
+            }
+        }
+        
+      
+        window.addEventListener('load', () => {
+            new ImageTrail();
         });
     </script>
 

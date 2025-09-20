@@ -881,7 +881,27 @@ hr {
     margin-bottom: 10px;
     text-align: right;
     white-space: pre;
+    position: relative;
+    cursor: none;
+}
 
+.image-trail {
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    pointer-events: none;
+    z-index: 1002;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+    transition: opacity 0.3s ease;
+}
+
+.image-trail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: auto;
+    filter: blur(0px) brightness(1.2) contrast(1.1);
 }
 
 .graphics-title {
