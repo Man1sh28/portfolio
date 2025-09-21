@@ -876,8 +876,8 @@ hr {
 }
 
 .graphics-content {
-    opacity: 0;
-    transform: translateY(50px);
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .graphics-header {
@@ -926,6 +926,68 @@ hr {
     -webkit-text-stroke: 3px #091d9f;
     text-stroke: 3px #091d9f;
     text-shadow: none;
+}
+
+/* Infinite Horizontal Scroll */
+.infinite-scroll-container {
+    width: 100%;
+    overflow: hidden;
+    margin: 60px 0;
+    position: relative;
+    height: 120px;
+    display: flex;
+    align-items: center;
+}
+
+.infinite-scroll {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    animation: scrollHorizontal 20s linear infinite;
+    width: max-content;
+}
+
+.scroll-item {
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(9, 29, 159, 0.2);
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(9, 29, 159, 0.3);
+}
+
+.scroll-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.9) contrast(1.1);
+    transition: all 0.3s ease;
+}
+
+.scroll-item:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 15px 40px rgba(9, 29, 159, 0.4);
+}
+
+.scroll-item:hover img {
+    filter: brightness(1.1) contrast(1.2);
+}
+
+@keyframes scrollHorizontal {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(calc(-140px * 3)); /* Move by width + gap of 3 items */
+    }
+}
+
+/* Pause animation on hover */
+.infinite-scroll-container:hover .infinite-scroll {
+    animation-play-state: paused;
 }
 
 .c1{

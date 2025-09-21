@@ -99,10 +99,55 @@
         <div class="graphics-content">
             <div class="graphics-header" id="graphics-header">
                 <h2 class="graphics-title reveal-text">GRAPHIC</h2>
-                <h2 class="graphics-title graphics-title-outline reveal-text"> DESIGNS</h2>
+                <h2 class="graphics-title graphics-title-outline reveal-text"> DESIGNS</h2>            
                 <div class="c1"></div>
                 <div class="c2"></div>
                     
+                </div>
+
+            <!-- Infinite Horizontal Scroll Images -->
+            <div class="infinite-scroll-container">
+                <div class="infinite-scroll">
+                    <!-- First set -->
+                    <div class="scroll-item">
+                        <img src="discord.png" alt="Discord">
+                    </div>
+                    <div class="scroll-item">
+                        <img src="imdone.png" alt="Imdone">
+                    </div>
+                    <div class="scroll-item">
+                        <img src="2.png" alt="Design">
+                    </div>
+                    <!-- Second set -->
+                    <div class="scroll-item">
+                        <img src="discord.png" alt="Discord">
+                    </div>
+                    <div class="scroll-item">
+                        <img src="imdone.png" alt="Imdone">
+                    </div>
+                    <div class="scroll-item">
+                        <img src="2.png" alt="Design">
+                    </div>
+                    <!-- Third set -->
+                    <div class="scroll-item">
+                        <img src="discord.png" alt="Discord">
+                    </div>
+                    <div class="scroll-item">
+                        <img src="imdone.png" alt="Imdone">
+                    </div>
+                    <div class="scroll-item">
+                        <img src="2.png" alt="Design">
+                    </div>
+                    <!-- Fourth set -->
+                    <div class="scroll-item">
+                        <img src="discord.png" alt="Discord">
+                    </div>
+                    <div class="scroll-item">
+                        <img src="imdone.png" alt="Imdone">
+                    </div>
+                    <div class="scroll-item">
+                        <img src="2.png" alt="Design">
+                    </div>
                 </div>
             </div>
         </div>
@@ -403,7 +448,7 @@
         // Reveal graphics content only AFTER circle covers most of the screen
         ScrollTrigger.create({
             trigger: graphicsSection,
-            start: 'top 30%', // Wait until circle is nearly full size
+            start: 'top 70%', // Make content visible sooner
             onEnter: () => {
                 gsap.to(graphicsContent, {
                     opacity: 1,
